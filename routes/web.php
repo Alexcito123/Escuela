@@ -6,7 +6,9 @@ use App\Http\Controllers\Auth\RegisterController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    return view('welcome');
+    return auth()->check()
+        ? redirect()->route('archivero.index')
+        : redirect()->route('login');
 });
 
 Route::middleware('guest')->group(function () {
