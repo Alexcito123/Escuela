@@ -13,13 +13,21 @@
         <nav class="bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 shadow-sm">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="flex justify-between h-16 items-center">
-                    <div class="flex items-center space-x-2">
+                    <div class="flex items-center space-x-6">
                         <a href="{{ route('archivero.index') }}" class="flex items-center space-x-2 text-gray-900 dark:text-white">
                             <svg class="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4" />
                             </svg>
-                            <span class="text-xl font-bold">Archivero Escolar</span>
+                            <span class="text-xl font-bold">Escuela</span>
                         </a>
+                        <nav class="hidden md:flex items-center space-x-1">
+                            <a href="{{ route('archivero.index') }}" class="px-3 py-2 text-sm font-medium rounded-lg {{ request()->routeIs('archivero.*') ? 'bg-blue-100 text-blue-700 dark:bg-blue-900 dark:text-blue-300' : 'text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-gray-700' }} transition">
+                                Archivero
+                            </a>
+                            <a href="{{ route('students.index') }}" class="px-3 py-2 text-sm font-medium rounded-lg {{ request()->routeIs('students.*') ? 'bg-blue-100 text-blue-700 dark:bg-blue-900 dark:text-blue-300' : 'text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-gray-700' }} transition">
+                                Alumnos
+                            </a>
+                        </nav>
                     </div>
                     <div class="flex items-center space-x-4">
                         <a href="{{ route('archivero.search') }}" class="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-white" title="Buscar">
