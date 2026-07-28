@@ -6,65 +6,79 @@
     @include('archivero.partials.breadcrumb')
 
     <div class="max-w-2xl mx-auto">
-        <div class="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-8">
-            <h1 class="text-2xl font-bold text-gray-900 dark:text-white mb-2">Subir Archivo</h1>
-            <p class="text-sm text-gray-500 dark:text-gray-400 mb-6">
-                Carpeta: <span class="font-medium text-gray-700 dark:text-gray-300">{{ $folder->name }}</span>
-                · Grado: <span class="font-medium text-gray-700 dark:text-gray-300">{{ $folder->grade->name }}</span>
-            </p>
+        <div class="bg-white rounded-3xl shadow-sm border border-gray-100 p-8 sm:p-10">
+            <div class="flex items-center gap-3 mb-6">
+                <div class="w-12 h-12 bg-educlub/10 rounded-2xl flex items-center justify-center">
+                    <svg class="w-6 h-6 text-educlub" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"/>
+                    </svg>
+                </div>
+                <div>
+                    <h1 class="text-2xl font-bold text-gray-800">Subir Archivo</h1>
+                    <p class="text-sm text-gray-400 mt-0.5">
+                        a <span class="font-semibold text-gray-600">{{ $folder->name }}</span>
+                        <span class="text-gray-300">·</span>
+                        {{ $folder->grade->name }}
+                    </p>
+                </div>
+            </div>
 
             <form method="POST" action="{{ route('archivero.store') }}" enctype="multipart/form-data" class="space-y-6">
                 @csrf
                 <input type="hidden" name="folder_id" value="{{ $folder->id }}">
 
                 <div>
-                    <label for="title" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                        Título <span class="text-red-500">*</span>
+                    <label for="title" class="block text-sm font-semibold text-gray-700 mb-2">
+                        Título <span class="text-red-400">*</span>
                     </label>
                     <input type="text" name="title" id="title" value="{{ old('title') }}" required maxlength="255"
-                           class="w-full rounded-lg border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white px-4 py-2 focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                           class="input-field"
                            placeholder="Título del archivo">
                 </div>
 
                 <div>
-                    <label for="description" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                        Descripción <span class="text-gray-400">(opcional)</span>
+                    <label for="description" class="block text-sm font-semibold text-gray-700 mb-2">
+                        Descripción <span class="text-gray-400 font-normal">(opcional)</span>
                     </label>
                     <textarea name="description" id="description" rows="3" maxlength="1000"
-                              class="w-full rounded-lg border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white px-4 py-2 focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                              class="input-field"
                               placeholder="Breve descripción del archivo">{{ old('description') }}</textarea>
                 </div>
 
                 <div>
-                    <label for="file" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                        Archivo <span class="text-red-500">*</span>
+                    <label class="block text-sm font-semibold text-gray-700 mb-2">
+                        Archivo <span class="text-red-400">*</span>
                     </label>
-                    <div class="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 dark:border-gray-600 border-dashed rounded-lg hover:border-blue-400 dark:hover:border-blue-500 transition cursor-pointer"
-                         onclick="document.getElementById('file').click()">
-                        <div class="text-center">
-                            <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
-                            </svg>
-                            <p class="mt-2 text-sm text-gray-600 dark:text-gray-400">
-                                <span class="font-medium text-blue-600 dark:text-blue-400 hover:text-blue-500">Selecciona un archivo</span> o arrastra aquí
-                            </p>
-                            <p class="mt-1 text-xs text-gray-500 dark:text-gray-500">
-                                PDF, DOC, DOCX, XLS, XLSX, PPT, PPTX, JPG, PNG, GIF, MP4, MP3, ZIP, RAR (max 20MB)
-                            </p>
+                    <div class="relative">
+                        <div class="flex justify-center px-6 pt-8 pb-8 border-2 border-dashed border-gray-200 rounded-2xl hover:border-educlub/40 hover:bg-educlub/5 transition-all cursor-pointer"
+                             onclick="document.getElementById('file').click()">
+                            <div class="text-center">
+                                <div class="w-16 h-16 bg-educlub/10 rounded-2xl flex items-center justify-center mx-auto mb-3">
+                                    <svg class="w-8 h-8 text-educlub" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"/>
+                                    </svg>
+                                </div>
+                                <p class="text-sm text-gray-600 font-medium">
+                                    <span class="text-educlub">Selecciona un archivo</span> o arrastra aquí
+                                </p>
+                                <p class="text-xs text-gray-400 mt-1">
+                                    PDF, DOC, DOCX, XLS, XLSX, PPT, PPTX, JPG, PNG, GIF, MP4, MP3, ZIP, RAR (max 20MB)
+                                </p>
+                            </div>
                         </div>
+                        <input type="file" name="file" id="file" class="hidden" required
+                               onchange="document.getElementById('file-name').textContent = this.files[0]?.name || 'Ningún archivo seleccionado'; document.getElementById('file-name').classList.remove('text-gray-400'); document.getElementById('file-name').classList.add('text-educlub');">
                     </div>
-                    <input type="file" name="file" id="file" class="hidden" required
-                           onchange="document.getElementById('file-name').textContent = this.files[0]?.name || 'Ningún archivo seleccionado'">
-                    <p id="file-name" class="mt-2 text-sm text-gray-500 dark:text-gray-400">Ningún archivo seleccionado</p>
+                    <p id="file-name" class="mt-2.5 text-sm text-gray-400">Ningún archivo seleccionado</p>
                 </div>
 
-                <div class="flex items-center justify-between pt-4 border-t border-gray-200 dark:border-gray-700">
+                <div class="flex items-center justify-between pt-6 border-t border-gray-100">
                     <a href="{{ route('archivero.folder', $folder) }}"
-                       class="text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition">
+                       class="text-sm font-medium text-gray-500 hover:text-gray-700 transition-colors flex items-center gap-1.5">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/></svg>
                         Cancelar
                     </a>
-                    <button type="submit"
-                            class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg font-medium transition">
+                    <button type="submit" class="btn-primary !py-2.5 !px-6 text-sm">
                         Subir Archivo
                     </button>
                 </div>

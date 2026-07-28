@@ -6,11 +6,14 @@ use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\TeacherController;
 use App\Http\Controllers\CourseController;
+use App\Http\Controllers\DashboardController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::middleware('auth')->get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
 Route::middleware('guest')->group(function () {
     Route::get('/login', [LoginController::class, 'create'])->name('login');
