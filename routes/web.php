@@ -4,6 +4,8 @@ use App\Http\Controllers\ArchiveroController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\StudentController;
+use App\Http\Controllers\TeacherController;
+use App\Http\Controllers\CourseController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -27,6 +29,26 @@ Route::middleware('auth')->prefix('alumnos')->name('students.')->group(function 
     Route::get('/{student}/editar', [StudentController::class, 'edit'])->name('edit');
     Route::put('/{student}', [StudentController::class, 'update'])->name('update');
     Route::delete('/{student}', [StudentController::class, 'destroy'])->name('destroy');
+});
+
+Route::middleware('auth')->prefix('docentes')->name('teachers.')->group(function () {
+    Route::get('/', [TeacherController::class, 'index'])->name('index');
+    Route::get('/crear', [TeacherController::class, 'create'])->name('create');
+    Route::post('/', [TeacherController::class, 'store'])->name('store');
+    Route::get('/{teacher}', [TeacherController::class, 'show'])->name('show');
+    Route::get('/{teacher}/editar', [TeacherController::class, 'edit'])->name('edit');
+    Route::put('/{teacher}', [TeacherController::class, 'update'])->name('update');
+    Route::delete('/{teacher}', [TeacherController::class, 'destroy'])->name('destroy');
+});
+
+Route::middleware('auth')->prefix('cursos')->name('courses.')->group(function () {
+    Route::get('/', [CourseController::class, 'index'])->name('index');
+    Route::get('/crear', [CourseController::class, 'create'])->name('create');
+    Route::post('/', [CourseController::class, 'store'])->name('store');
+    Route::get('/{course}', [CourseController::class, 'show'])->name('show');
+    Route::get('/{course}/editar', [CourseController::class, 'edit'])->name('edit');
+    Route::put('/{course}', [CourseController::class, 'update'])->name('update');
+    Route::delete('/{course}', [CourseController::class, 'destroy'])->name('destroy');
 });
 
 Route::middleware('auth')->prefix('archivero')->name('archivero.')->group(function () {
