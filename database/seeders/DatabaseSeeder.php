@@ -13,10 +13,12 @@ class DatabaseSeeder extends Seeder
             GradeSeeder::class,
         ]);
 
-        User::factory()->create([
-            'name' => 'Admin',
-            'email' => 'admin@escuela.test',
-        ]);
+        if (!User::where('email', 'admin@escuela.test')->exists()) {
+            User::factory()->create([
+                'name' => 'Admin',
+                'email' => 'admin@escuela.test',
+            ]);
+        }
 
         $this->call([
             FolderSeeder::class,
