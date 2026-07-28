@@ -3,59 +3,108 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Registrarse - {{ config('app.name', 'Escuela') }}</title>
+    <title>Registrarse - EduClub</title>
     <link rel="preconnect" href="https://fonts.bunny.net">
-    <link href="https://fonts.bunny.net/css?family=instrument-sans:400,500,600,700" rel="stylesheet" />
+    <link href="https://fonts.bunny.net/css?family=nunito:400,500,600,700,800" rel="stylesheet" />
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
-<body class="bg-gray-50 dark:bg-gray-900 font-sans antialiased">
-    <div class="min-h-screen flex items-center justify-center px-4">
-        <div class="w-full max-w-md">
-            <div class="text-center mb-8">
-                <svg class="w-12 h-12 text-blue-600 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4" />
-                </svg>
-                <h1 class="text-2xl font-bold text-gray-900 dark:text-white">Crear Cuenta</h1>
-                <p class="text-gray-600 dark:text-gray-400 mt-1">Regístrate para acceder al archivero</p>
-            </div>
+<body class="bg-[#F8FAFC] font-sans antialiased min-h-screen flex items-center justify-center p-4" style="background-image: radial-gradient(circle at 10% 20%, rgba(61, 175, 203, 0.05) 0%, transparent 50%), radial-gradient(circle at 90% 80%, rgba(127, 191, 122, 0.05) 0%, transparent 50%);">
 
-            <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-8">
-                <form method="POST" action="{{ route('register') }}">
-                    @csrf
-                    <div class="mb-4">
-                        <label for="name" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Nombre completo</label>
+    {{-- Decorative Elements --}}
+    <div class="fixed inset-0 pointer-events-none overflow-hidden">
+        <svg class="absolute top-10 left-10 w-16 h-16 text-green-pastel/10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
+        <svg class="absolute bottom-20 right-20 w-12 h-12 text-orange-pastel/10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"/></svg>
+        <div class="absolute top-1/3 right-1/4 w-64 h-64 border border-educlub/5 rounded-full animate-pulse"></div>
+        <div class="absolute bottom-1/3 left-1/4 w-48 h-48 border border-green-pastel/5 rounded-full animate-pulse" style="animation-delay: 1s;"></div>
+    </div>
+
+    <div class="relative w-full max-w-md">
+        <div class="text-center mb-8">
+            <div class="inline-flex items-center justify-center w-20 h-20 bg-educlub rounded-3xl shadow-lg mb-5">
+                <svg class="w-10 h-10 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+                </svg>
+            </div>
+            <h1 class="text-3xl font-extrabold text-gray-800">Crear Cuenta</h1>
+            <p class="text-gray-500 mt-2">Únete a EduClub</p>
+        </div>
+
+        <div class="bg-white rounded-3xl shadow-xl shadow-gray-200/50 p-8 sm:p-10 border border-gray-100">
+            <form method="POST" action="{{ route('register') }}">
+                @csrf
+
+                <div class="mb-5">
+                    <label for="name" class="block text-sm font-semibold text-gray-700 mb-2">Nombre Completo</label>
+                    <div class="relative">
+                        <svg class="input-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
+                        </svg>
                         <input type="text" name="name" id="name" value="{{ old('name') }}"
-                            class="w-full rounded-lg border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white px-4 py-2 focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                            required autofocus>
+                            class="input-field pl-11 @error('name') border-red-300 focus:ring-red-300 @enderror"
+                            placeholder="Tu nombre" required autofocus>
                     </div>
-                    <div class="mb-4">
-                        <label for="email" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Correo electrónico</label>
+                    @error('name')
+                        <p class="mt-1.5 text-xs text-red-500">{{ $message }}</p>
+                    @enderror
+                </div>
+
+                <div class="mb-5">
+                    <label for="email" class="block text-sm font-semibold text-gray-700 mb-2">Correo Electrónico</label>
+                    <div class="relative">
+                        <svg class="input-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                        </svg>
                         <input type="email" name="email" id="email" value="{{ old('email') }}"
-                            class="w-full rounded-lg border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white px-4 py-2 focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                            required>
+                            class="input-field pl-11 @error('email') border-red-300 focus:ring-red-300 @enderror"
+                            placeholder="tu@correo.com" required>
                     </div>
-                    <div class="mb-4">
-                        <label for="password" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Contraseña</label>
+                    @error('email')
+                        <p class="mt-1.5 text-xs text-red-500">{{ $message }}</p>
+                    @enderror
+                </div>
+
+                <div class="mb-5">
+                    <label for="password" class="block text-sm font-semibold text-gray-700 mb-2">Contraseña</label>
+                    <div class="relative">
+                        <svg class="input-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
+                        </svg>
                         <input type="password" name="password" id="password"
-                            class="w-full rounded-lg border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white px-4 py-2 focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                            required minlength="8">
+                            class="input-field pl-11 @error('password') border-red-300 focus:ring-red-300 @enderror"
+                            placeholder="••••••••" required>
                     </div>
-                    <div class="mb-6">
-                        <label for="password_confirmation" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Confirmar contraseña</label>
+                    @error('password')
+                        <p class="mt-1.5 text-xs text-red-500">{{ $message }}</p>
+                    @enderror
+                </div>
+
+                <div class="mb-8">
+                    <label for="password_confirmation" class="block text-sm font-semibold text-gray-700 mb-2">Confirmar Contraseña</label>
+                    <div class="relative">
+                        <svg class="input-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+                        </svg>
                         <input type="password" name="password_confirmation" id="password_confirmation"
-                            class="w-full rounded-lg border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white px-4 py-2 focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                            required>
+                            class="input-field pl-11"
+                            placeholder="••••••••" required>
                     </div>
-                    <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-lg transition">
-                        Registrarse
-                    </button>
-                </form>
-                <p class="mt-4 text-center text-sm text-gray-600 dark:text-gray-400">
+                </div>
+
+                <button type="submit" class="btn-primary w-full !py-3 text-base">
+                    Crear Cuenta
+                </button>
+            </form>
+
+            <div class="mt-8 pt-6 border-t border-gray-100 text-center">
+                <p class="text-sm text-gray-500">
                     ¿Ya tienes cuenta?
-                    <a href="{{ route('login') }}" class="text-blue-600 hover:text-blue-700 font-medium">Inicia sesión</a>
+                    <a href="{{ route('login') }}" class="text-educlub hover:text-educlub-dark font-semibold transition-colors">Inicia Sesión</a>
                 </p>
             </div>
         </div>
+
+        <p class="text-center text-xs text-gray-400 mt-8">&copy; {{ date('Y') }} EduClub. Todos los derechos reservados.</p>
     </div>
+
 </body>
 </html>
