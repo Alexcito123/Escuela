@@ -7,6 +7,8 @@ use App\Http\Controllers\StudentController;
 use App\Http\Controllers\TeacherController;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\ExpenseController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -32,6 +34,7 @@ Route::middleware('auth')->prefix('alumnos')->name('students.')->group(function 
     Route::get('/{student}/editar', [StudentController::class, 'edit'])->name('edit');
     Route::put('/{student}', [StudentController::class, 'update'])->name('update');
     Route::delete('/{student}', [StudentController::class, 'destroy'])->name('destroy');
+    Route::get('/grado/{grade}', [StudentController::class, 'byGrade'])->name('byGrade');
 });
 
 Route::middleware('auth')->prefix('docentes')->name('teachers.')->group(function () {
@@ -52,6 +55,27 @@ Route::middleware('auth')->prefix('cursos')->name('courses.')->group(function ()
     Route::get('/{course}/editar', [CourseController::class, 'edit'])->name('edit');
     Route::put('/{course}', [CourseController::class, 'update'])->name('update');
     Route::delete('/{course}', [CourseController::class, 'destroy'])->name('destroy');
+});
+
+Route::middleware('auth')->prefix('gastos')->name('expenses.')->group(function () {
+    Route::get('/', [ExpenseController::class, 'index'])->name('index');
+    Route::get('/crear', [ExpenseController::class, 'create'])->name('create');
+    Route::post('/', [ExpenseController::class, 'store'])->name('store');
+    Route::get('/{expense}', [ExpenseController::class, 'show'])->name('show');
+    Route::get('/{expense}/editar', [ExpenseController::class, 'edit'])->name('edit');
+    Route::put('/{expense}', [ExpenseController::class, 'update'])->name('update');
+    Route::delete('/{expense}', [ExpenseController::class, 'destroy'])->name('destroy');
+});
+
+Route::middleware('auth')->prefix('pagos')->name('payments.')->group(function () {
+    Route::get('/', [PaymentController::class, 'index'])->name('index');
+    Route::get('/crear', [PaymentController::class, 'create'])->name('create');
+    Route::post('/', [PaymentController::class, 'store'])->name('store');
+    Route::get('/alumno/{student}', [PaymentController::class, 'studentHistory'])->name('student');
+    Route::get('/{payment}', [PaymentController::class, 'show'])->name('show');
+    Route::get('/{payment}/editar', [PaymentController::class, 'edit'])->name('edit');
+    Route::put('/{payment}', [PaymentController::class, 'update'])->name('update');
+    Route::delete('/{payment}', [PaymentController::class, 'destroy'])->name('destroy');
 });
 
 Route::middleware('auth')->prefix('archivero')->name('archivero.')->group(function () {

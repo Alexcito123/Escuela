@@ -21,6 +21,14 @@ class Course extends Model
         'estado',
     ];
 
+    protected function casts(): array
+    {
+        return [
+            'hora_inicio' => 'string',
+            'hora_fin' => 'string',
+        ];
+    }
+
     public function grade(): BelongsTo
     {
         return $this->belongsTo(Grade::class);

@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Teacher extends Model
@@ -32,6 +33,11 @@ class Teacher extends Model
             'fecha_nacimiento' => 'date',
             'fecha_ingreso' => 'date',
         ];
+    }
+
+    public function courses(): HasMany
+    {
+        return $this->hasMany(Course::class);
     }
 
     public function getNombreCompletoAttribute(): string
