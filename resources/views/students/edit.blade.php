@@ -75,9 +75,7 @@
                     </div>
                 </div>
 
-                <hr class="border-gray-200">
-
-                <h3 class="text-lg font-semibold text-gray-900">Datos del Tutor</h3>
+                <x-section-title color="pink">Datos del Tutor</x-section-title>
 
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                     <div class="md:col-span-2">
@@ -98,9 +96,7 @@
                            class="w-full rounded-xl border border-gray-200 px-4 py-2 text-sm focus:ring-2 focus:ring-educlub/30 focus:border-educlub">
                 </div>
 
-                <hr class="border-gray-200">
-
-                <h3 class="text-lg font-semibold text-gray-900">Datos Escolares</h3>
+                <x-section-title color="green">Datos Escolares</x-section-title>
 
                 <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
                     <div>

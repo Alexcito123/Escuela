@@ -62,9 +62,7 @@
                     </div>
                 </div>
 
-                <hr class="border-gray-200">
-
-                <h3 class="text-lg font-semibold text-gray-900">Horario</h3>
+                <x-section-title color="orange">Horario</x-section-title>
 
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                     <div>

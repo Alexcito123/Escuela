@@ -7,22 +7,42 @@
 
 @theme {
   --font-sans: 'Nunito', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
-  --color-educlub: #3DAFCB;
-  --color-educlub-dark: #2D8BA3;
-  --color-educlub-light: #6FC8DE;
-  --color-green-pastel: #7FBF7A;
-  --color-green-pastel-dark: #68A864;
-  --color-orange-pastel: #F4B25D;
-  --color-orange-pastel-dark: #E09A3E;
-  --color-yellow-soft: #F6D76A;
-  --color-pink-pastel: #E79AB7;
-  --color-pink-pastel-dark: #D47DA0;
+
+  /* Paleta inspirada en el logo de EduClub */
+  --color-educlub: #4A9A93;
+  --color-educlub-dark: #3B7F79;
+  --color-educlub-light: #82C2BC;
+
+  --color-green-pastel: #86B98E;
+  --color-green-pastel-dark: #689B71;
+
+  --color-orange-pastel: #D9A06B;
+  --color-orange-pastel-dark: #C0804D;
+
+  --color-yellow-soft: #EDDFA4;
+
+  --color-pink-pastel: #DEA1A2;
+  --color-pink-pastel-dark: #C67E7F;
+
+  --color-lavender-pastel: #C4A3C8;
+  --color-blue-dusty: #7E96AE;
+  --color-cream: #FBF7EC;
 }
 
 @layer base {
   * {
     scrollbar-width: thin;
-    scrollbar-color: #CBD5E1 transparent;
+    scrollbar-color: #C9D6D2 transparent;
+  }
+
+  body {
+    background-color: #FBF7EC;
+    background-image:
+      radial-gradient(circle at 12% 18%, rgba(74, 154, 147, 0.08) 0%, transparent 45%),
+      radial-gradient(circle at 88% 12%, rgba(222, 161, 162, 0.08) 0%, transparent 42%),
+      radial-gradient(circle at 85% 85%, rgba(134, 185, 142, 0.08) 0%, transparent 45%),
+      radial-gradient(circle at 8% 88%, rgba(217, 160, 107, 0.07) 0%, transparent 42%);
+    background-attachment: fixed;
   }
 }
 
@@ -40,10 +60,10 @@
     @apply bg-pink-pastel hover:bg-pink-pastel-dark text-white font-semibold py-2.5 px-6 rounded-2xl transition-all duration-200 shadow-md hover:shadow-lg active:scale-[0.98];
   }
   .card {
-    @apply bg-white rounded-2xl shadow-md hover:shadow-lg transition-all duration-200 p-6;
+    @apply bg-white rounded-2xl shadow-[0_6px_24px_rgba(74,154,147,0.08)] hover:shadow-[0_10px_30px_rgba(74,154,147,0.14)] transition-all duration-200 p-6 border border-[#F2ECDD];
   }
   .input-field {
-    @apply w-full rounded-xl border border-gray-200 px-4 py-3 text-sm focus:ring-2 focus:ring-educlub/30 focus:border-educlub outline-none transition-all duration-200;
+    @apply w-full rounded-xl border border-[#E8E2D3] px-4 py-3 text-sm bg-white focus:ring-2 focus:ring-educlub/25 focus:border-educlub outline-none transition-all duration-200;
   }
   .input-icon {
     @apply absolute left-3.5 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400;

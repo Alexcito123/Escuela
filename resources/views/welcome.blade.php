@@ -8,7 +8,7 @@
     <link href="https://fonts.bunny.net/css?family=nunito:400,500,600,700,800" rel="stylesheet" />
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
-<body class="bg-[#F8FAFC] font-sans antialiased min-h-screen flex flex-col" style="background-image: radial-gradient(circle at 10% 30%, rgba(61, 175, 203, 0.06) 0%, transparent 50%), radial-gradient(circle at 90% 70%, rgba(127, 191, 122, 0.06) 0%, transparent 50%), radial-gradient(circle at 50% 50%, rgba(244, 178, 93, 0.04) 0%, transparent 50%);">
+<body class="font-sans antialiased min-h-screen flex flex-col" style="background-image: radial-gradient(circle at 10% 30%, rgba(74, 154, 147, 0.08) 0%, transparent 50%), radial-gradient(circle at 90% 70%, rgba(134, 185, 142, 0.08) 0%, transparent 50%), radial-gradient(circle at 50% 50%, rgba(217, 160, 107, 0.06) 0%, transparent 50%), radial-gradient(circle at 80% 20%, rgba(222, 161, 162, 0.06) 0%, transparent 40%);">
 
     <div class="fixed inset-0 pointer-events-none overflow-hidden">
         <svg class="absolute top-16 left-16 w-20 h-20 text-educlub/10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>

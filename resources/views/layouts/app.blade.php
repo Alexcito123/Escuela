@@ -9,7 +9,18 @@
     <link href="https://fonts.bunny.net/css?family=nunito:400,500,600,700,800" rel="stylesheet" />
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
-<body class="bg-[#F8FAFC] font-sans antialiased" x-data="{ sidebarOpen: false }">
+<body class="font-sans antialiased" x-data="{ sidebarOpen: false }">
+
+    {{-- Decorative pastel background --}}
+    <div class="fixed inset-0 -z-10 pointer-events-none overflow-hidden">
+        <svg class="absolute top-10 left-10 w-20 h-20 text-educlub/10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
+        <svg class="absolute top-24 right-20 w-16 h-16 text-pink-pastel/10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>
+        <svg class="absolute bottom-24 left-24 w-14 h-14 text-green-pastel/10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"/></svg>
+        <svg class="absolute bottom-12 right-16 w-12 h-12 text-orange-pastel/10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"/></svg>
+        <div class="absolute top-1/3 right-1/4 w-96 h-96 border border-educlub/5 rounded-full"></div>
+        <div class="absolute bottom-1/4 left-1/3 w-72 h-72 border border-pink-pastel/5 rounded-full"></div>
+        <div class="absolute top-1/4 left-1/3 w-56 h-56 border border-green-pastel/5 rounded-full"></div>
+    </div>
 
     <div class="min-h-screen flex">
 

@@ -8,7 +8,7 @@
     <link href="https://fonts.bunny.net/css?family=nunito:400,500,600,700,800" rel="stylesheet" />
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
-<body class="bg-[#F8FAFC] font-sans antialiased min-h-screen flex items-center justify-center p-4" style="background-image: radial-gradient(circle at 10% 20%, rgba(61, 175, 203, 0.05) 0%, transparent 50%), radial-gradient(circle at 90% 80%, rgba(127, 191, 122, 0.05) 0%, transparent 50%), radial-gradient(circle at 50% 50%, rgba(244, 178, 93, 0.03) 0%, transparent 50%);">
+<body class="font-sans antialiased min-h-screen flex items-center justify-center p-4" style="background-image: radial-gradient(circle at 10% 20%, rgba(74, 154, 147, 0.07) 0%, transparent 50%), radial-gradient(circle at 90% 80%, rgba(134, 185, 142, 0.07) 0%, transparent 50%), radial-gradient(circle at 50% 50%, rgba(217, 160, 107, 0.05) 0%, transparent 50%), radial-gradient(circle at 85% 15%, rgba(222, 161, 162, 0.05) 0%, transparent 40%);">
 
     {{-- Decorative Elements --}}
     <div class="fixed inset-0 pointer-events-none overflow-hidden">
