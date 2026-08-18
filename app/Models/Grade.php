@@ -23,4 +23,14 @@ class Grade extends Model
     {
         return $this->hasManyThrough(Archive::class, Folder::class);
     }
+
+    public function students(): HasMany
+    {
+        return $this->hasMany(Student::class);
+    }
+
+    public function courses(): HasMany
+    {
+        return $this->hasMany(Course::class);
+    }
 }

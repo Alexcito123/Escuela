@@ -78,7 +78,7 @@
                             class="w-4 h-4 rounded-lg border-gray-300 text-educlub focus:ring-educlub/30">
                         <span class="text-sm text-gray-600">Recordarme</span>
                     </label>
-                    <a href="#" class="text-sm text-educlub hover:text-educlub-dark font-medium transition-colors">¿Olvidaste tu contraseña?</a>
+
                 </div>
 
                 <button type="submit" class="btn-primary w-full !py-3 text-base">
