@@ -4,6 +4,7 @@ use App\Http\Controllers\ArchiveroController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\ImageConverterController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -20,6 +21,11 @@ Route::middleware('guest')->group(function () {
 });
 
 Route::post('/logout', [LoginController::class, 'destroy'])->name('logout');
+
+Route::middleware('auth')->prefix('formato-imagen')->name('imagenes.')->group(function () {
+    Route::get('/', [ImageConverterController::class, 'index'])->name('index');
+    Route::post('/convertir', [ImageConverterController::class, 'convert'])->name('convert');
+});
 
 Route::middleware('auth')->prefix('archivero')->name('archivero.')->group(function () {
     Route::get('/', [ArchiveroController::class, 'index'])->name('index');

@@ -56,18 +56,22 @@
                         <div class="flex justify-center px-6 pt-6 pb-6 border-2 border-dashed border-gray-200 rounded-2xl hover:border-orange-pastel/40 hover:bg-orange-50/30 transition-all cursor-pointer"
                              onclick="document.getElementById('file').click()">
                             <div class="text-center">
-                                <div class="w-12 h-12 bg-orange-pastel/10 rounded-2xl flex items-center justify-center mx-auto mb-2">
-                                    <svg class="w-6 h-6 text-orange-pastel" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"/>
-                                    </svg>
+                                <img id="file-preview" class="hidden max-h-56 mx-auto rounded-xl border border-gray-200 shadow-sm mb-3" alt="Vista previa">
+                                <iframe id="file-preview-pdf" class="hidden w-full h-72 rounded-xl border border-gray-200 shadow-sm mb-3"></iframe>
+                                <div id="file-placeholder">
+                                    <div class="w-12 h-12 bg-orange-pastel/10 rounded-2xl flex items-center justify-center mx-auto mb-2">
+                                        <svg class="w-6 h-6 text-orange-pastel" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"/>
+                                        </svg>
+                                    </div>
+                                    <p class="text-sm text-gray-600">
+                                        <span class="font-medium text-orange-pastel">Selecciona un archivo</span> para reemplazar
+                                    </p>
                                 </div>
-                                <p class="text-sm text-gray-600">
-                                    <span class="font-medium text-orange-pastel">Selecciona un archivo</span> para reemplazar
-                                </p>
                             </div>
                         </div>
                         <input type="file" name="file" id="file" class="hidden"
-                               onchange="document.getElementById('file-name').textContent = this.files[0]?.name || 'Ningún archivo seleccionado'; document.getElementById('file-name').classList.remove('text-gray-400'); document.getElementById('file-name').classList.add('text-orange-pastel');">
+                               onchange="previewArchivo(this)">
                     </div>
                     <p id="file-name" class="mt-2.5 text-sm text-gray-400">Ningún archivo seleccionado</p>
                 </div>
@@ -87,4 +91,52 @@
             </form>
         </div>
     </div>
+
+    <script>
+        function previewArchivo(input) {
+            const file = input.files[0];
+            const nombreEl = document.getElementById('file-name');
+            const preview = document.getElementById('file-preview');
+            const pdfPreview = document.getElementById('file-preview-pdf');
+            const placeholder = document.getElementById('file-placeholder');
+
+            if (!file) {
+                nombreEl.textContent = 'Ningún archivo seleccionado';
+                nombreEl.classList.remove('text-orange-pastel');
+                nombreEl.classList.add('text-gray-400');
+                preview.classList.add('hidden');
+                pdfPreview.classList.add('hidden');
+                pdfPreview.src = '';
+                placeholder.classList.remove('hidden');
+                return;
+            }
+
+            nombreEl.textContent = file.name;
+            nombreEl.classList.remove('text-gray-400');
+            nombreEl.classList.add('text-orange-pastel');
+
+            const esImagen = file.type.startsWith('image/') || /\.(jpe?g|png|gif|webp|bmp|svg)$/i.test(file.name);
+            const esPdf = file.type === 'application/pdf' || /\.pdf$/i.test(file.name);
+
+            pdfPreview.classList.add('hidden');
+            pdfPreview.src = '';
+            preview.classList.add('hidden');
+
+            if (esImagen) {
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    preview.src = e.target.result;
+                    preview.classList.remove('hidden');
+                    placeholder.classList.add('hidden');
+                };
+                reader.readAsDataURL(file);
+            } else if (esPdf) {
+                pdfPreview.src = URL.createObjectURL(file);
+                pdfPreview.classList.remove('hidden');
+                placeholder.classList.add('hidden');
+            } else {
+                placeholder.classList.remove('hidden');
+            }
+        }
+    </script>
 @endsection
