@@ -101,7 +101,9 @@
                                             </div>
                                             <div class="min-w-0">
                                                 <p class="text-sm font-semibold text-gray-800 truncate">{{ $archive->title }}</p>
-                                                <p class="text-xs text-gray-400 truncate">{{ $archive->original_name }}</p>
+                                                <p class="text-xs text-gray-400 truncate">
+                                                    {{ count($archive->files) }} archivo(s): {{ implode(', ', array_slice($archive->original_name, 0, 2)) }}{{ count($archive->files) > 2 ? ', ...' : '' }}
+                                                </p>
                                             </div>
                                         </div>
                                     </td>
@@ -114,7 +116,7 @@
                                     </td>
                                     <td class="py-4 px-6 text-sm text-gray-500 whitespace-nowrap">
                                         @php
-                                            $size = $archive->file_size;
+                                            $size = $archive->total_size;
                                             $formatted = $size >= 1073741824 ? number_format($size / 1073741824, 2) . ' GB' : ($size >= 1048576 ? number_format($size / 1048576, 2) . ' MB' : ($size >= 1024 ? number_format($size / 1024, 2) . ' KB' : $size . ' B'));
                                         @endphp
                                         {{ $formatted }}
@@ -122,6 +124,13 @@
                                     <td class="py-4 px-6 text-sm text-gray-500 whitespace-nowrap">{{ $archive->created_at->format('d/m/Y') }}</td>
                                     <td class="py-4 px-6 text-right whitespace-nowrap">
                                         <div class="flex items-center justify-end gap-1">
+                                            <a href="{{ route('archivero.print', $archive) }}"
+                                               target="_blank"
+                                               class="p-2 text-gray-300 hover:text-purple-500 hover:bg-purple-50 rounded-xl transition-all" title="Imprimir">
+                                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4H7v4a2 2 0 002 2zm3-9V5a1 1 0 00-1-1h-2a1 1 0 00-1 1v3h4z"/>
+                                                </svg>
+                                            </a>
                                             <a href="{{ route('archivero.download', $archive) }}"
                                                class="p-2 text-gray-300 hover:text-educlub hover:bg-educlub/5 rounded-xl transition-all" title="Descargar">
                                                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">

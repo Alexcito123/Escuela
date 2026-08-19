@@ -21,7 +21,18 @@
                 </div>
             </div>
 
-            <form method="POST" action="{{ route('archivero.update', $archive) }}" enctype="multipart/form-data" class="space-y-6">
+            <form method="POST" action="{{ route('archivero.update', $archive) }}" enctype="multipart/form-data" class="space-y-6"
+                  x-data="{
+                      archivos: [{ nombre: '', file: null }],
+                      agregar() { this.archivos.push({ nombre: '', file: null }); },
+                      quitar(i) { if (this.archivos.length > 1) this.archivos.splice(i, 1); },
+                      seleccionar(i, event) {
+                          const f = event.target.files[0];
+                          if (!f) { this.archivos[i] = { nombre: '', file: null }; return; }
+                          this.archivos[i] = { nombre: f.name, file: f };
+                      }
+                  }"
+                  @submit="this.querySelector('button[type=submit]').disabled = true; this.querySelector('button[type=submit]').textContent = 'Guardando...'">
                 @csrf
                 @method('PUT')
 
@@ -42,38 +53,44 @@
                 </div>
 
                 <div>
-                    <label class="block text-sm font-semibold text-gray-700 mb-2">Archivo actual</label>
-                    <div class="flex items-center gap-2.5 bg-gray-50 rounded-xl px-4 py-3">
-                        <svg class="w-5 h-5 text-gray-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"/>
-                        </svg>
-                        <span class="text-sm text-gray-600 truncate">{{ $archive->original_name }}</span>
-                    </div>
-                    <label for="file" class="block text-sm font-semibold text-gray-700 mt-4 mb-2">
-                        Reemplazar archivo <span class="text-gray-400 font-normal">(opcional)</span>
+                    <label class="block text-sm font-semibold text-gray-700 mb-2">
+                        Archivos actuales <span class="text-gray-400 font-normal">({{ count($archive->files) }})</span>
                     </label>
-                    <div class="relative">
-                        <div class="flex justify-center px-6 pt-6 pb-6 border-2 border-dashed border-gray-200 rounded-2xl hover:border-orange-pastel/40 hover:bg-orange-50/30 transition-all cursor-pointer"
-                             onclick="document.getElementById('file').click()">
-                            <div class="text-center">
-                                <img id="file-preview" class="hidden max-h-56 mx-auto rounded-xl border border-gray-200 shadow-sm mb-3" alt="Vista previa">
-                                <iframe id="file-preview-pdf" class="hidden w-full h-72 rounded-xl border border-gray-200 shadow-sm mb-3"></iframe>
-                                <div id="file-placeholder">
-                                    <div class="w-12 h-12 bg-orange-pastel/10 rounded-2xl flex items-center justify-center mx-auto mb-2">
-                                        <svg class="w-6 h-6 text-orange-pastel" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"/>
-                                        </svg>
-                                    </div>
-                                    <p class="text-sm text-gray-600">
-                                        <span class="font-medium text-orange-pastel">Selecciona un archivo</span> para reemplazar
-                                    </p>
-                                </div>
+                    <div class="space-y-2">
+                        @foreach ($archive->files as $file)
+                            <div class="flex items-center gap-2.5 bg-gray-50 rounded-xl px-4 py-2.5">
+                                <svg class="w-4 h-4 text-gray-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"/>
+                                </svg>
+                                <span class="text-sm text-gray-600 truncate">{{ $file['original_name'] }}</span>
                             </div>
-                        </div>
-                        <input type="file" name="file" id="file" class="hidden"
-                               onchange="previewArchivo(this)">
+                        @endforeach
                     </div>
-                    <p id="file-name" class="mt-2.5 text-sm text-gray-400">Ningún archivo seleccionado</p>
+                    <label class="block text-sm font-semibold text-gray-700 mt-4 mb-2">
+                        Reemplazar archivos <span class="text-gray-400 font-normal">(opcional — sustituye todos los actuales)</span>
+                    </label>
+                    <div class="space-y-3">
+                        <template x-for="(a, i) in archivos" :key="i">
+                            <div class="flex items-center gap-3 border-2 border-dashed border-gray-200 rounded-xl p-3 hover:border-orange-pastel/40 hover:bg-orange-50/30 transition-all">
+                                <label class="flex-1 min-w-0 cursor-pointer">
+                                    <span class="flex items-center gap-2 text-sm text-gray-600">
+                                        <svg class="w-4 h-4 text-orange-pastel shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"/></svg>
+                                        <span class="truncate" x-text="a.nombre || 'Selecciona un archivo...'"></span>
+                                    </span>
+                                    <input type="file" :name="'files[]'" class="hidden" @change="seleccionar(i, $event)">
+                                </label>
+                                <button type="button" @click="quitar(i)" x-show="archivos.length > 1"
+                                        class="shrink-0 p-2 text-gray-300 hover:text-red-500 hover:bg-red-50 rounded-xl transition-all" title="Quitar archivo">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+                                </button>
+                            </div>
+                        </template>
+                    </div>
+                    <button type="button" @click="agregar()"
+                            class="mt-3 inline-flex items-center gap-2 text-sm font-semibold text-orange-pastel hover:text-orange-pastel-dark transition-colors">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+                        Agregar otro archivo
+                    </button>
                 </div>
 
                 <div class="flex items-center justify-between pt-6 border-t border-gray-100">
@@ -91,52 +108,4 @@
             </form>
         </div>
     </div>
-
-    <script>
-        function previewArchivo(input) {
-            const file = input.files[0];
-            const nombreEl = document.getElementById('file-name');
-            const preview = document.getElementById('file-preview');
-            const pdfPreview = document.getElementById('file-preview-pdf');
-            const placeholder = document.getElementById('file-placeholder');
-
-            if (!file) {
-                nombreEl.textContent = 'Ningún archivo seleccionado';
-                nombreEl.classList.remove('text-orange-pastel');
-                nombreEl.classList.add('text-gray-400');
-                preview.classList.add('hidden');
-                pdfPreview.classList.add('hidden');
-                pdfPreview.src = '';
-                placeholder.classList.remove('hidden');
-                return;
-            }
-
-            nombreEl.textContent = file.name;
-            nombreEl.classList.remove('text-gray-400');
-            nombreEl.classList.add('text-orange-pastel');
-
-            const esImagen = file.type.startsWith('image/') || /\.(jpe?g|png|gif|webp|bmp|svg)$/i.test(file.name);
-            const esPdf = file.type === 'application/pdf' || /\.pdf$/i.test(file.name);
-
-            pdfPreview.classList.add('hidden');
-            pdfPreview.src = '';
-            preview.classList.add('hidden');
-
-            if (esImagen) {
-                const reader = new FileReader();
-                reader.onload = (e) => {
-                    preview.src = e.target.result;
-                    preview.classList.remove('hidden');
-                    placeholder.classList.add('hidden');
-                };
-                reader.readAsDataURL(file);
-            } else if (esPdf) {
-                pdfPreview.src = URL.createObjectURL(file);
-                pdfPreview.classList.remove('hidden');
-                placeholder.classList.add('hidden');
-            } else {
-                placeholder.classList.remove('hidden');
-            }
-        }
-    </script>
 @endsection

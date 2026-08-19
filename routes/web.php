@@ -39,6 +39,8 @@ Route::middleware('auth')->prefix('archivero')->name('archivero.')->group(functi
     Route::put('/{archive}', [ArchiveroController::class, 'update'])->name('update');
     Route::delete('/{archive}', [ArchiveroController::class, 'destroy'])->name('destroy');
     Route::get('/descargar/{archive}', [ArchiveroController::class, 'download'])->name('download');
+    Route::get('/imprimir/{archive}', [ArchiveroController::class, 'print'])->name('print');
     Route::post('/carpeta', [ArchiveroController::class, 'storeFolder'])->name('storeFolder');
+    Route::put('/carpeta/{folder}', [ArchiveroController::class, 'updateFolder'])->name('updateFolder');
     Route::delete('/carpeta/{folder}', [ArchiveroController::class, 'destroyFolder'])->name('destroyFolder');
 });

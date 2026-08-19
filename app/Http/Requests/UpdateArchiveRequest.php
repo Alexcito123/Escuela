@@ -16,7 +16,8 @@ class UpdateArchiveRequest extends FormRequest
         return [
             'title' => 'required|string|max:255',
             'description' => 'nullable|string|max:1000',
-            'file' => 'nullable|file|max:20480|mimes:pdf,doc,docx,xls,xlsx,ppt,pptx,jpg,jpeg,png,gif,mp4,mp3,zip,rar',
+            'files' => 'nullable|array',
+            'files.*' => 'required|file|max:20480|mimes:pdf,doc,docx,xls,xlsx,ppt,pptx,jpg,jpeg,png,gif,mp4,mp3,zip,rar',
         ];
     }
 
@@ -24,8 +25,8 @@ class UpdateArchiveRequest extends FormRequest
     {
         return [
             'title.required' => 'El título es requerido.',
-            'file.max' => 'El archivo no puede exceder 20MB.',
-            'file.mimes' => 'El tipo de archivo no está permitido.',
+            'files.*.max' => 'Un archivo no puede exceder 20MB.',
+            'files.*.mimes' => 'El tipo de archivo no está permitido.',
         ];
     }
 }

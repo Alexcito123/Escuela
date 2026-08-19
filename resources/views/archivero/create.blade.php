@@ -23,7 +23,35 @@
                 </div>
             </div>
 
-            <form method="POST" action="{{ route('archivero.store') }}" enctype="multipart/form-data" class="space-y-6">
+            <form method="POST" action="{{ route('archivero.store') }}" enctype="multipart/form-data" class="space-y-6"
+                  x-data="{
+                      archivos: [{ nombre: '', file: null, preview: '', esImagen: false, esPdf: false }],
+                      agregar() {
+                          this.archivos.push({ nombre: '', file: null, preview: '', esImagen: false, esPdf: false });
+                      },
+                      quitar(i) {
+                          if (this.archivos.length > 1) this.archivos.splice(i, 1);
+                      },
+                      seleccionar(i, event) {
+                          const f = event.target.files[0];
+                          if (!f) {
+                              this.archivos[i] = { nombre: '', file: null, preview: '', esImagen: false, esPdf: false };
+                              return;
+                          }
+                          const esImagen = f.type.startsWith('image/') || /\.(jpe?g|png|gif|webp|bmp|svg)$/i.test(f.name);
+                          const esPdf = f.type === 'application/pdf' || /\.pdf$/i.test(f.name);
+                          let preview = '';
+                          if (esImagen) {
+                              const reader = new FileReader();
+                              reader.onload = e => { this.archivos[i].preview = e.target.result; };
+                              reader.readAsDataURL(f);
+                          } else if (esPdf) {
+                              preview = URL.createObjectURL(f);
+                          }
+                          this.archivos[i] = { nombre: f.name, file: f, preview, esImagen, esPdf };
+                      }
+                  }"
+                  @submit="if (!archivos.some(a => a.file)) { $event.preventDefault(); alert('Selecciona al menos un archivo.'); return; } const btn = this.querySelector('button[type=submit]'); btn.disabled = true; btn.textContent = 'Subiendo...'">
                 @csrf
                 <input type="hidden" name="folder_id" value="{{ $folder->id }}">
 
@@ -47,33 +75,41 @@
 
                 <div>
                     <label class="block text-sm font-semibold text-gray-700 mb-2">
-                        Archivo <span class="text-red-400">*</span>
+                        Archivos <span class="text-red-400">*</span>
                     </label>
-                    <div class="relative">
-                        <div class="flex justify-center px-6 pt-8 pb-8 border-2 border-dashed border-gray-200 rounded-2xl hover:border-educlub/40 hover:bg-educlub/5 transition-all cursor-pointer"
-                             onclick="document.getElementById('file').click()">
-                            <div class="text-center">
-                                <img id="file-preview" class="hidden max-h-56 mx-auto rounded-xl border border-gray-200 shadow-sm mb-3" alt="Vista previa">
-                                <iframe id="file-preview-pdf" class="hidden w-full h-72 rounded-xl border border-gray-200 shadow-sm mb-3"></iframe>
-                                <div id="file-placeholder">
-                                    <div class="w-16 h-16 bg-educlub/10 rounded-2xl flex items-center justify-center mx-auto mb-3">
-                                        <svg class="w-8 h-8 text-educlub" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"/>
-                                        </svg>
-                                    </div>
-                                    <p class="text-sm text-gray-600 font-medium">
-                                        <span class="text-educlub">Selecciona un archivo</span> o arrastra aquí
-                                    </p>
-                                    <p class="text-xs text-gray-400 mt-1">
-                                        PDF, DOC, DOCX, XLS, XLSX, PPT, PPTX, JPG, PNG, GIF, MP4, MP3, ZIP, RAR (max 20MB)
-                                    </p>
+                    <div class="space-y-3">
+                        <template x-for="(a, i) in archivos" :key="i">
+                            <div class="border-2 border-dashed border-gray-200 rounded-2xl p-4 hover:border-educlub/40 hover:bg-educlub/5 transition-all">
+                                <div class="flex items-center justify-between gap-3">
+                                    <label class="flex-1 min-w-0 cursor-pointer">
+                                        <span class="flex items-center gap-3 text-sm text-gray-600">
+                                            <span class="shrink-0 w-10 h-10 bg-educlub/10 rounded-xl flex items-center justify-center">
+                                                <svg class="w-5 h-5 text-educlub" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"/>
+                                                </svg>
+                                            </span>
+                                            <span class="truncate" x-text="a.nombre || 'Selecciona un archivo...'"></span>
+                                        </span>
+                                        <input type="file" :name="'files[]'" class="hidden" @change="seleccionar(i, $event)">
+                                    </label>
+                                    <button type="button" @click="quitar(i)" x-show="archivos.length > 1"
+                                            class="shrink-0 p-2 text-gray-300 hover:text-red-500 hover:bg-red-50 rounded-xl transition-all" title="Quitar archivo">
+                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+                                    </button>
                                 </div>
+                                <img x-show="a.esImagen && a.preview" :src="a.preview" class="mt-3 max-h-40 mx-auto rounded-xl border border-gray-200 shadow-sm" alt="Vista previa">
+                                <iframe x-show="a.esPdf && a.preview" :src="a.preview" class="mt-3 w-full h-60 rounded-xl border border-gray-200 shadow-sm"></iframe>
                             </div>
-                        </div>
-                        <input type="file" name="file" id="file" class="hidden" required
-                               onchange="previewArchivo(this)">
+                        </template>
                     </div>
-                    <p id="file-name" class="mt-2.5 text-sm text-gray-400">Ningún archivo seleccionado</p>
+                    <button type="button" @click="agregar()"
+                            class="mt-3 inline-flex items-center gap-2 text-sm font-semibold text-educlub hover:text-green-pastel transition-colors">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+                        Agregar otro archivo
+                    </button>
+                    <p class="mt-2 text-xs text-gray-400">
+                        Máximo 20MB por archivo
+                    </p>
                 </div>
 
                 <div class="flex items-center justify-between pt-6 border-t border-gray-100">
@@ -89,52 +125,4 @@
             </form>
         </div>
     </div>
-
-    <script>
-        function previewArchivo(input) {
-            const file = input.files[0];
-            const nombreEl = document.getElementById('file-name');
-            const preview = document.getElementById('file-preview');
-            const pdfPreview = document.getElementById('file-preview-pdf');
-            const placeholder = document.getElementById('file-placeholder');
-
-            if (!file) {
-                nombreEl.textContent = 'Ningún archivo seleccionado';
-                nombreEl.classList.remove('text-educlub');
-                nombreEl.classList.add('text-gray-400');
-                preview.classList.add('hidden');
-                pdfPreview.classList.add('hidden');
-                pdfPreview.src = '';
-                placeholder.classList.remove('hidden');
-                return;
-            }
-
-            nombreEl.textContent = file.name;
-            nombreEl.classList.remove('text-gray-400');
-            nombreEl.classList.add('text-educlub');
-
-            const esImagen = file.type.startsWith('image/') || /\.(jpe?g|png|gif|webp|bmp|svg)$/i.test(file.name);
-            const esPdf = file.type === 'application/pdf' || /\.pdf$/i.test(file.name);
-
-            pdfPreview.classList.add('hidden');
-            pdfPreview.src = '';
-            preview.classList.add('hidden');
-
-            if (esImagen) {
-                const reader = new FileReader();
-                reader.onload = (e) => {
-                    preview.src = e.target.result;
-                    preview.classList.remove('hidden');
-                    placeholder.classList.add('hidden');
-                };
-                reader.readAsDataURL(file);
-            } else if (esPdf) {
-                pdfPreview.src = URL.createObjectURL(file);
-                pdfPreview.classList.remove('hidden');
-                placeholder.classList.add('hidden');
-            } else {
-                placeholder.classList.remove('hidden');
-            }
-        }
-    </script>
 @endsection
