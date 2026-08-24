@@ -18,35 +18,43 @@ class ImageConverterController extends Controller
         ]);
 
         $file = $request->file('imagen');
+        $path = $file->getRealPath();
+        $info = @getimagesize($path);
 
-        $source = $this->loadImage($file->getRealPath());
+        if ($info && $info[2] === IMAGETYPE_JPEG) {
+            $jpeg = file_get_contents($path);
+            $width = $info[0];
+            $height = $info[1];
+        } else {
+            $source = $this->loadImage($path);
 
-        if (! $source) {
-            return back()->with('error', 'No se pudo procesar la imagen. Asegúrate de que sea un archivo de imagen válido.')->withInput();
+            if (! $source) {
+                return back()->with('error', 'No se pudo procesar la imagen. Asegúrate de que sea un archivo de imagen válido y que GD esté habilitada.')->withInput();
+            }
+
+            // Tamaño carta a 300 DPI: 8.5" x 11" = 2550 x 3300 px
+            $maxWidth = 2550;
+            $maxHeight = 3300;
+
+            $srcWidth = imagesx($source);
+            $srcHeight = imagesy($source);
+
+            $scale = min($maxWidth / $srcWidth, $maxHeight / $srcHeight);
+            $width = max(1, (int) round($srcWidth * $scale));
+            $height = max(1, (int) round($srcHeight * $scale));
+
+            $dest = imagecreatetruecolor($width, $height);
+            $white = imagecolorallocate($dest, 255, 255, 255);
+            imagefill($dest, 0, 0, $white);
+            imagecopyresampled($dest, $source, 0, 0, 0, 0, $width, $height, $srcWidth, $srcHeight);
+
+            ob_start();
+            imagejpeg($dest, null, 90);
+            $jpeg = ob_get_clean();
+
+            imagedestroy($source);
+            imagedestroy($dest);
         }
-
-        // Tamaño carta a 300 DPI: 8.5" x 11" = 2550 x 3300 px
-        $maxWidth = 2550;
-        $maxHeight = 3300;
-
-        $srcWidth = imagesx($source);
-        $srcHeight = imagesy($source);
-
-        $scale = min($maxWidth / $srcWidth, $maxHeight / $srcHeight);
-        $width = max(1, (int) round($srcWidth * $scale));
-        $height = max(1, (int) round($srcHeight * $scale));
-
-        $dest = imagecreatetruecolor($width, $height);
-        $white = imagecolorallocate($dest, 255, 255, 255);
-        imagefill($dest, 0, 0, $white);
-        imagecopyresampled($dest, $source, 0, 0, 0, 0, $width, $height, $srcWidth, $srcHeight);
-
-        ob_start();
-        imagejpeg($dest, null, 90);
-        $jpeg = ob_get_clean();
-
-        imagedestroy($source);
-        imagedestroy($dest);
 
         $data = $this->generarPdfCarta($jpeg, $width, $height);
 
@@ -100,6 +108,10 @@ class ImageConverterController extends Controller
 
     private function loadImage($path)
     {
+        if (! extension_loaded('gd')) {
+            return null;
+        }
+
         $info = @getimagesize($path);
 
         if (! $info) {
@@ -108,15 +120,15 @@ class ImageConverterController extends Controller
 
         switch ($info[2]) {
             case IMAGETYPE_JPEG:
-                return @imagecreatefromjpeg($path);
+                return @\imagecreatefromjpeg($path);
             case IMAGETYPE_PNG:
-                return @imagecreatefrompng($path);
+                return @\imagecreatefrompng($path);
             case IMAGETYPE_GIF:
-                return @imagecreatefromgif($path);
+                return @\imagecreatefromgif($path);
             case IMAGETYPE_WEBP:
-                return function_exists('imagecreatefromwebp') ? @imagecreatefromwebp($path) : null;
+                return function_exists('imagecreatefromwebp') ? @\imagecreatefromwebp($path) : null;
             case IMAGETYPE_BMP:
-                return function_exists('imagecreatefrombmp') ? @imagecreatefrombmp($path) : null;
+                return function_exists('imagecreatefrombmp') ? @\imagecreatefrombmp($path) : null;
             default:
                 return null;
         }
