@@ -45,7 +45,7 @@
     </div>
 
     {{-- Quick Access --}}
-    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
+    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6">
         <a href="{{ route('archivero.index') }}" class="card flex items-center gap-4 group hover:border-educlub/30 border border-transparent">
             <div class="w-14 h-14 bg-educlub/10 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform">
                 <svg class="w-7 h-7 text-educlub" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4"/></svg>
@@ -53,6 +53,15 @@
             <div>
                 <p class="font-semibold text-gray-800">Archivero</p>
                 <p class="text-xs text-gray-400 mt-0.5">Gestionar carpetas y archivos escolares</p>
+            </div>
+        </a>
+        <a href="{{ route('gastos.index') }}" class="card flex items-center gap-4 group hover:border-orange-pastel/30 border border-transparent">
+            <div class="w-14 h-14 bg-orange-pastel/10 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform">
+                <svg class="w-7 h-7 text-orange-pastel" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
+            </div>
+            <div>
+                <p class="font-semibold text-gray-800">Gastos</p>
+                <p class="text-xs text-gray-400 mt-0.5">Control de gastos mensuales</p>
             </div>
         </a>
         <a href="{{ route('imagenes.index') }}" class="card flex items-center gap-4 group hover:border-green-pastel/30 border border-transparent">

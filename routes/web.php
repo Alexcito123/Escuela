@@ -4,6 +4,7 @@ use App\Http\Controllers\ArchiveroController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\GastosController;
 use App\Http\Controllers\ImageConverterController;
 use Illuminate\Support\Facades\Route;
 
@@ -43,4 +44,17 @@ Route::middleware('auth')->prefix('archivero')->name('archivero.')->group(functi
     Route::post('/carpeta', [ArchiveroController::class, 'storeFolder'])->name('storeFolder');
     Route::put('/carpeta/{folder}', [ArchiveroController::class, 'updateFolder'])->name('updateFolder');
     Route::delete('/carpeta/{folder}', [ArchiveroController::class, 'destroyFolder'])->name('destroyFolder');
+});
+
+Route::middleware('auth')->prefix('gastos')->name('gastos.')->group(function () {
+    Route::get('/', [GastosController::class, 'index'])->name('index');
+    Route::post('/', [GastosController::class, 'storeMonth'])->name('storeMonth');
+    Route::get('/{month}', [GastosController::class, 'month'])->name('month');
+    Route::put('/{month}', [GastosController::class, 'updateMonth'])->name('updateMonth');
+    Route::delete('/{month}', [GastosController::class, 'destroyMonth'])->name('destroyMonth');
+    Route::post('/semana', [GastosController::class, 'storeWeek'])->name('storeWeek');
+    Route::get('/semana/{week}', [GastosController::class, 'week'])->name('week');
+    Route::put('/semana/{week}', [GastosController::class, 'updateWeek'])->name('updateWeek');
+    Route::delete('/semana/{week}', [GastosController::class, 'destroyWeek'])->name('destroyWeek');
+    Route::post('/semana/{week}/rows', [GastosController::class, 'saveRows'])->name('saveRows');
 });

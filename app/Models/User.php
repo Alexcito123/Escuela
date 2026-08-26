@@ -41,4 +41,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(Folder::class);
     }
+
+    public function gastoMonths()
+    {
+        return $this->hasMany(GastoMonth::class);
+    }
 }
