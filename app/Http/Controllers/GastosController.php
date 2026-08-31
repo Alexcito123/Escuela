@@ -146,7 +146,6 @@ class GastosController extends Controller
                 'mensual' => $row['mensual'] ?? '',
                 'columna1' => $row['columna1'] ?? '',
                 'gastos_semana' => $row['gastos_semana'] ?? '',
-                'pendientes_pagar' => $row['pendientes_pagar'] ?? '',
                 'row_order' => $index,
             ];
 

@@ -55,7 +55,6 @@
                             <th class="text-left py-3.5 px-4 font-semibold w-36">Mensual</th>
                             <th class="text-left py-3.5 px-4 font-semibold">Columna 1</th>
                             <th class="text-left py-3.5 px-4 font-semibold w-36">Gastos Semana</th>
-                            <th class="text-left py-3.5 px-4 font-semibold w-36">Pendientes por Pagar</th>
                             <th class="text-right py-3.5 px-4 font-semibold w-24">Acciones</th>
                         </tr>
                     </thead>
@@ -101,15 +100,6 @@
                                                class="input-dinero w-full rounded-lg border border-gray-200 px-3 py-2 text-sm focus:ring-2 focus:ring-orange-pastel/30 focus:border-orange-pastel outline-none transition-all">
                                     </div>
                                 </td>
-                                <td class="py-2 px-4">
-                                    <div class="input-group-dinero">
-                                        <span class="input-dinero-ico {{ $row->pendientes_pagar ? 'visible' : '' }}" data-dinero>$</span>
-                                        <input type="text" name="rows[{{ $i }}][pendientes_pagar]" value="{{ $row->pendientes_pagar }}"
-                                               placeholder="0.00"
-                                               oninput="toggleDinero(this)"
-                                               class="input-dinero w-full rounded-lg border border-gray-200 px-3 py-2 text-sm focus:ring-2 focus:ring-orange-pastel/30 focus:border-orange-pastel outline-none transition-all">
-                                    </div>
-                                </td>
                                 <td class="py-2 px-4 text-right">
                                     <button type="button" onclick="eliminarFila(this)" class="p-2 text-gray-300 hover:text-red-500 hover:bg-red-50 rounded-xl transition-all" title="Eliminar fila">
                                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
@@ -118,6 +108,16 @@
                             </tr>
                         @endforeach
                     </tbody>
+                    <tfoot id="footTotales">
+                        <tr class="bg-orange-50/60 border-t-2 border-orange-pastel text-sm font-semibold text-gray-700">
+                            <td colspan="2" class="py-3 px-4 text-right">TOTAL</td>
+                            <td class="py-3 px-4"><span id="totalPagoSemanal">0.00</span></td>
+                            <td></td>
+                            <td></td>
+                            <td class="py-3 px-4"><span id="totalGastosSemana">0.00</span></td>
+                            <td></td>
+                        </tr>
+                    </tfoot>
                 </table>
             </div>
 
@@ -145,7 +145,23 @@
             if (span) {
                 span.classList.toggle('visible', input.value.trim() !== '');
             }
+            actualizarTotales();
         }
+
+        function actualizarTotales() {
+            let totalPago = 0;
+            let totalGastos = 0;
+            document.querySelectorAll('#bodyGastos tr:not(.hidden)').forEach(row => {
+                const pago = parseFloat(row.querySelector('input[name*="[pago_semanal]"]')?.value);
+                const gastos = parseFloat(row.querySelector('input[name*="[gastos_semana]"]')?.value);
+                if (!isNaN(pago)) totalPago += pago;
+                if (!isNaN(gastos)) totalGastos += gastos;
+            });
+            document.getElementById('totalPagoSemanal').textContent = totalPago.toFixed(2);
+            document.getElementById('totalGastosSemana').textContent = totalGastos.toFixed(2);
+        }
+
+        document.addEventListener('DOMContentLoaded', actualizarTotales);
 
         function agregarFila() {
             const tbody = document.getElementById('bodyGastos');
@@ -187,14 +203,6 @@
                                class="input-dinero w-full rounded-lg border border-gray-200 px-3 py-2 text-sm focus:ring-2 focus:ring-orange-pastel/30 focus:border-orange-pastel outline-none transition-all">
                     </div>
                 </td>
-                <td class="py-2 px-4">
-                    <div class="input-group-dinero">
-                        <span class="input-dinero-ico" data-dinero>$</span>
-                        <input type="text" name="rows[${rowIndex}][pendientes_pagar]" value=""
-                               placeholder="0.00" oninput="toggleDinero(this)"
-                               class="input-dinero w-full rounded-lg border border-gray-200 px-3 py-2 text-sm focus:ring-2 focus:ring-orange-pastel/30 focus:border-orange-pastel outline-none transition-all">
-                    </div>
-                </td>
                 <td class="py-2 px-4 text-right">
                     <button type="button" onclick="eliminarFila(this)" class="p-2 text-gray-300 hover:text-red-500 hover:bg-red-50 rounded-xl transition-all" title="Eliminar fila">
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
@@ -206,6 +214,7 @@
 
             tr.querySelector('input[name*="alumno"]').focus();
             renumerarFilas();
+            actualizarTotales();
         }
 
         function eliminarFila(btn) {
@@ -217,6 +226,7 @@
             row.classList.add('hidden');
             row.querySelectorAll('input').forEach(i => i.disabled = true);
             renumerarFilas();
+            actualizarTotales();
         }
 
         function renumerarFilas() {

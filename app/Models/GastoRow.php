@@ -14,7 +14,6 @@ class GastoRow extends Model
         'mensual',
         'columna1',
         'gastos_semana',
-        'pendientes_pagar',
         'row_order',
         'user_id',
     ];
