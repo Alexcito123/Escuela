@@ -144,6 +144,28 @@ class ArchiveroController extends Controller
             ->with('success', 'Archivo eliminado correctamente.');
     }
 
+    public function destroyFile(Archive $archive, int $index)
+    {
+        $files = $archive->files;
+
+        if (!isset($files[$index])) {
+            return back()->with('error', 'El archivo no existe.');
+        }
+
+        Storage::disk('public')->delete($files[$index]['path']);
+
+        foreach (['file_path', 'file_name', 'original_name', 'file_size', 'file_mime'] as $field) {
+            $values = $archive->{$field} ?? [];
+            unset($values[$index]);
+            $archive->{$field} = array_values($values);
+        }
+
+        $archive->save();
+
+        return redirect()->route('archivero.folder', $archive->folder)
+            ->with('success', 'Archivo eliminado correctamente.');
+    }
+
     public function download(Archive $archive)
     {
         $files = $archive->files;

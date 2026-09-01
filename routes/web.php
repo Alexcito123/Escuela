@@ -6,6 +6,7 @@ use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\GastosController;
 use App\Http\Controllers\ImageConverterController;
+use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -23,6 +24,12 @@ Route::middleware('guest')->group(function () {
 
 Route::post('/logout', [LoginController::class, 'destroy'])->name('logout');
 
+Route::middleware('auth')->prefix('perfil')->name('perfil.')->group(function () {
+    Route::get('/', [ProfileController::class, 'show'])->name('show');
+    Route::get('/editar', [ProfileController::class, 'edit'])->name('edit');
+    Route::put('/', [ProfileController::class, 'update'])->name('update');
+});
+
 Route::middleware('auth')->prefix('formato-imagen')->name('imagenes.')->group(function () {
     Route::get('/', [ImageConverterController::class, 'index'])->name('index');
     Route::post('/convertir', [ImageConverterController::class, 'convert'])->name('convert');
@@ -39,6 +46,7 @@ Route::middleware('auth')->prefix('archivero')->name('archivero.')->group(functi
     Route::get('/{archive}/editar', [ArchiveroController::class, 'edit'])->name('edit');
     Route::put('/{archive}', [ArchiveroController::class, 'update'])->name('update');
     Route::delete('/{archive}', [ArchiveroController::class, 'destroy'])->name('destroy');
+    Route::delete('/{archive}/archivo/{index}', [ArchiveroController::class, 'destroyFile'])->name('destroyFile');
     Route::get('/descargar/{archive}', [ArchiveroController::class, 'download'])->name('download');
     Route::get('/imprimir/{archive}', [ArchiveroController::class, 'print'])->name('print');
     Route::post('/carpeta', [ArchiveroController::class, 'storeFolder'])->name('storeFolder');
