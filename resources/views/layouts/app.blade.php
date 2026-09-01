@@ -72,7 +72,7 @@
         <div class="flex-1 flex flex-col min-w-0">
 
             {{-- Navbar --}}
-            <header class="bg-gradient-to-r from-educlub to-educlub-dark shadow-sm">
+            <header class="shadow-sm" style="background-image: linear-gradient(to bottom, #4FC3E8 0%, #2FA5CE 55%, #5FBF88 130%);">
                 <div class="flex items-center justify-between h-16 px-4 sm:px-6">
                     <div class="flex items-center gap-3">
                         <button @click="sidebarOpen = true" class="lg:hidden text-white/80 hover:text-white">
@@ -92,8 +92,8 @@
                         </button>
 
                         <div class="relative" x-data="{ open: false }">
-                            <button @click="open = !open" class="flex items-center gap-2 text-white/80 hover:text-white transition-colors">
-                                <div class="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center overflow-hidden">
+                            <button @click="open = !open" class="flex items-center gap-2 rounded-xl border border-white/10 bg-white/10 px-2.5 py-1.5 text-white/90 shadow-sm transition-all hover:bg-white/15 hover:text-white">
+                                <div class="w-8 h-8 rounded-full bg-white/15 flex items-center justify-center overflow-hidden ring-1 ring-white/15">
                                     @if (auth()->user()->avatar_url)
                                         <img src="{{ auth()->user()->avatar_url }}" alt="Foto de perfil" class="w-full h-full object-cover">
                                     @else
@@ -107,31 +107,33 @@
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
                                 </svg>
                             </button>
-                            <div x-show="open" @click.away="open = false" x-cloak class="absolute right-0 mt-2 w-56 bg-white rounded-2xl shadow-xl border border-gray-100 py-2 z-50">
-                                <div class="px-4 py-2 border-b border-gray-100 flex items-center gap-3">
-                                    <div class="w-9 h-9 rounded-full bg-educlub/10 flex items-center justify-center overflow-hidden shrink-0">
+                            <div x-show="open" @click.away="open = false" x-cloak class="absolute right-0 mt-2 w-64 overflow-hidden rounded-2xl border border-white/10 bg-white/10 shadow-xl backdrop-blur-sm z-50">
+                                <div class="border-b border-white/10 px-4 py-3 flex items-center gap-3 text-white">
+                                    <div class="w-9 h-9 rounded-full bg-white/15 flex items-center justify-center overflow-hidden shrink-0 ring-1 ring-white/15">
                                         @if (auth()->user()->avatar_url)
                                             <img src="{{ auth()->user()->avatar_url }}" alt="Foto de perfil" class="w-full h-full object-cover">
                                         @else
-                                            <svg class="w-5 h-5 text-educlub" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
+                                            <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
                                         @endif
                                     </div>
                                     <div class="min-w-0">
-                                        <p class="text-sm font-semibold text-gray-800 truncate">{{ auth()->user()->name ?? 'Usuario' }}</p>
-                                        <p class="text-xs text-gray-500 truncate">{{ auth()->user()->email ?? '' }}</p>
+                                        <p class="text-sm font-semibold truncate text-white">{{ auth()->user()->name ?? 'Usuario' }}</p>
+                                        <p class="text-xs truncate text-white/80">{{ auth()->user()->email ?? '' }}</p>
                                     </div>
                                 </div>
-                                <a href="{{ route('perfil.show') }}" class="flex items-center gap-2 px-4 py-2 text-sm text-gray-600 hover:bg-gray-50 transition-colors">
-                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
-                                    Mi Perfil
-                                </a>
-                                <form method="POST" action="{{ route('logout') }}">
-                                    @csrf
-                                    <button type="submit" class="flex items-center gap-2 w-full px-4 py-2 text-sm text-red-500 hover:bg-red-50 transition-colors">
-                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/></svg>
-                                        Cerrar Sesión
-                                    </button>
-                                </form>
+                                <div class="p-2">
+                                    <a href="{{ route('perfil.show') }}" class="flex items-center gap-2 rounded-xl px-3 py-2 text-sm text-white/85 transition-colors hover:bg-white/15 hover:text-white">
+                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
+                                        Mi Perfil
+                                    </a>
+                                    <form method="POST" action="{{ route('logout') }}" class="mt-1">
+                                        @csrf
+                                        <button type="submit" class="flex w-full items-center gap-2 rounded-xl px-3 py-2 text-sm text-white/85 transition-colors hover:bg-red-500/20 hover:text-white">
+                                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/></svg>
+                                            Cerrar Sesión
+                                        </button>
+                                    </form>
+                                </div>
                             </div>
                         </div>
                     </div>
