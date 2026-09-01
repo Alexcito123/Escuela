@@ -8,11 +8,11 @@
     <link href="https://fonts.bunny.net/css?family=nunito:400,500,600,700,800" rel="stylesheet" />
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
-<body class="bg-[#F8FAFC] font-sans antialiased">
+<body class="bg-slate-50 font-sans antialiased" style="background-image: radial-gradient(circle at 0% 0%, rgba(79,195,232,0.10) 0%, transparent 45%), radial-gradient(circle at 100% 0%, rgba(126,211,160,0.10) 0%, transparent 45%), radial-gradient(circle at 50% 100%, rgba(255,200,117,0.09) 0%, transparent 50%);">
     <div class="min-h-screen flex">
         {{-- Sidebar --}}
         <div class="hidden lg:block w-64 shrink-0">
-            <div class="fixed w-64 h-full bg-educlub overflow-y-auto">
+            <div class="fixed w-64 h-full bg-educlub overflow-y-auto" style="background-image: linear-gradient(to bottom, #4FC3E8 0%, #2FA5CE 55%, #5FBF88 130%);">
                 <div class="flex items-center h-16 px-6 border-b border-white/10">
                     <a href="{{ route('dashboard') }}" class="flex items-center gap-2">
                         <svg class="w-8 h-8 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -21,23 +21,23 @@
                         <span class="text-xl font-bold text-white">EduClub</span>
                     </a>
                 </div>
-                <nav class="px-3 py-4 space-y-1">
+<nav class="px-3 py-4 space-y-1">
                     <a href="{{ route('dashboard') }}"
-                       class="flex items-center gap-3 px-4 py-2.5 rounded-xl transition-all {{ request()->routeIs('dashboard') ? 'bg-green-pastel text-white font-medium' : 'text-white/70 hover:text-white hover:bg-white/10' }}">
+                       class="flex items-center gap-3 px-4 py-2.5 rounded-xl transition-all {{ request()->routeIs('dashboard') ? 'bg-white/25 text-white font-medium' : 'text-white/70 hover:text-white hover:bg-white/15' }}">
                         <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
                         <span>Inicio</span>
                     </a>
                     <a href="{{ route('archivero.index') }}"
-                       class="flex items-center gap-3 px-4 py-2.5 rounded-xl transition-all {{ request()->routeIs('archivero.*') ? 'bg-green-pastel text-white font-medium' : 'text-white/70 hover:text-white hover:bg-white/10' }}">
+                       class="flex items-center gap-3 px-4 py-2.5 rounded-xl transition-all {{ request()->routeIs('archivero.*') ? 'bg-white/25 text-white font-medium' : 'text-white/70 hover:text-white hover:bg-white/15' }}">
                         <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4"/></svg>
                         <span>Archivero</span>
                     </a>
                     <a href="{{ route('gastos.index') }}"
-                       class="flex items-center gap-3 px-4 py-2.5 rounded-xl transition-all {{ request()->routeIs('gastos.*') ? 'bg-green-pastel text-white font-medium' : 'text-white/70 hover:text-white hover:bg-white/10' }}">
+                       class="flex items-center gap-3 px-4 py-2.5 rounded-xl transition-all {{ request()->routeIs('gastos.*') ? 'bg-white/25 text-white font-medium' : 'text-white/70 hover:text-white hover:bg-white/15' }}">
                         <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
                         <span>Gastos</span>
                     </a>
-<a href="{{ route('imagenes.index') }}" class="flex items-center gap-3 px-4 py-2.5 rounded-xl text-white/70 hover:text-white hover:bg-white/10 transition-all">
+<a href="{{ route('imagenes.index') }}" class="flex items-center gap-3 px-4 py-2.5 rounded-xl text-white/70 hover:text-white hover:bg-white/15 transition-all {{ request()->is('formato-imagen*') ? 'bg-white/25 text-white font-medium' : '' }}">
                         <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
                         <span>Formato de Imágenes</span>
                     </a>
@@ -46,7 +46,7 @@
         </div>
 
         <div class="flex-1 flex flex-col min-w-0">
-            <header class="bg-educlub shadow-md">
+            <header class="bg-gradient-to-r from-educlub to-educlub-dark shadow-sm">
                 <div class="flex items-center justify-between h-16 px-4 sm:px-6">
                     <div class="flex items-center gap-3">
                         <span class="text-lg font-bold text-white">@yield('title', 'Archivo')</span>
@@ -98,8 +98,8 @@
                 @yield('content')
             </main>
 
-            <footer class="border-t border-gray-200 bg-white px-4 sm:px-6 py-4">
-                <p class="text-center text-xs text-gray-400">&copy; {{ date('Y') }} EduClub.</p>
+            <footer class="border-t border-sky-100 bg-white/80 backdrop-blur-sm px-4 sm:px-6 py-4">
+                <p class="text-center text-xs text-gray-400">&copy; {{ date('Y') }} EduClub. <span class="text-educlub/70 font-medium">Todos los derechos reservados.</span></p>
             </footer>
         </div>
     </div>

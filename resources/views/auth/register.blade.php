@@ -8,7 +8,7 @@
     <link href="https://fonts.bunny.net/css?family=nunito:400,500,600,700,800" rel="stylesheet" />
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
-<body class="bg-[#F8FAFC] font-sans antialiased min-h-screen flex items-center justify-center p-4" style="background-image: radial-gradient(circle at 10% 20%, rgba(61, 175, 203, 0.05) 0%, transparent 50%), radial-gradient(circle at 90% 80%, rgba(127, 191, 122, 0.05) 0%, transparent 50%);">
+<body class="bg-slate-50 font-sans antialiased min-h-screen flex items-center justify-center p-4" style="background-image: radial-gradient(circle at 15% 20%, rgba(126, 211, 160, 0.18) 0%, transparent 45%), radial-gradient(circle at 85% 80%, rgba(79, 195, 232, 0.18) 0%, transparent 45%), radial-gradient(circle at 50% 50%, rgba(249, 174, 203, 0.12) 0%, transparent 45%);">
 
     {{-- Decorative Elements --}}
     <div class="fixed inset-0 pointer-events-none overflow-hidden">
@@ -20,7 +20,7 @@
 
     <div class="relative w-full max-w-md">
         <div class="text-center mb-8">
-            <div class="inline-flex items-center justify-center w-20 h-20 bg-educlub rounded-3xl shadow-lg mb-5">
+            <div class="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-br from-green-pastel to-educlub rounded-3xl shadow-lg mb-5">
                 <svg class="w-10 h-10 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
                 </svg>
@@ -29,7 +29,7 @@
             <p class="text-gray-500 mt-2">Únete a EduClub</p>
         </div>
 
-        <div class="bg-white rounded-3xl shadow-xl shadow-gray-200/50 p-8 sm:p-10 border border-gray-100">
+        <div class="bg-white rounded-3xl shadow-xl shadow-sky-100/60 p-8 sm:p-10 border border-sky-100/70">
             <form method="POST" action="{{ route('register') }}">
                 @csrf
 

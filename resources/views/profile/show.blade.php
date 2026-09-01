@@ -8,12 +8,16 @@
     <div class="bg-white rounded-3xl shadow-xl shadow-gray-200/50 border border-gray-100 overflow-hidden">
 
         {{-- Header de perfil --}}
-        <div class="bg-educlub p-6 relative">
+        <div class="bg-educlub p-6 relative" style="background-image: linear-gradient(to right, #4FC3E8, #2FA5CE, #7ED3A0);">
             <div class="flex items-center gap-4">
-                <div class="w-16 h-16 rounded-full bg-white/20 flex items-center justify-center">
-                    <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
-                    </svg>
+                <div class="w-16 h-16 rounded-full bg-white/20 flex items-center justify-center overflow-hidden">
+                    @if (auth()->user()->avatar_url)
+                        <img src="{{ auth()->user()->avatar_url }}" alt="Foto de perfil" class="w-full h-full object-cover">
+                    @else
+                        <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
+                        </svg>
+                    @endif
                 </div>
                 <div>
                     <h2 class="text-xl font-bold text-white">{{ auth()->user()->name }}</h2>

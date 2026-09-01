@@ -7,43 +7,51 @@
 
 @theme {
   --font-sans: 'Nunito', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
-  --color-educlub: #3DAFCB;
-  --color-educlub-dark: #2D8BA3;
-  --color-educlub-light: #6FC8DE;
-  --color-green-pastel: #7FBF7A;
-  --color-green-pastel-dark: #68A864;
-  --color-orange-pastel: #F4B25D;
-  --color-orange-pastel-dark: #E09A3E;
-  --color-yellow-soft: #F6D76A;
-  --color-pink-pastel: #E79AB7;
-  --color-pink-pastel-dark: #D47DA0;
+  --color-educlub: #4FC3E8;
+  --color-educlub-dark: #2FA5CE;
+  --color-educlub-light: #9BE0F7;
+  --color-green-pastel: #7ED3A0;
+  --color-green-pastel-dark: #5FBF88;
+  --color-orange-pastel: #FFC875;
+  --color-orange-pastel-dark: #F0AB45;
+  --color-yellow-soft: #FFE3A0;
+  --color-pink-pastel: #F9AECB;
+  --color-pink-pastel-dark: #EF8DB4;
+  --color-lavanda: #B7A9F5;
+  --color-lavanda-dark: #9C8AEE;
+  --color-cielo: #E6F7FE;
+  --color-menta: #E9FAF1;
 }
 
 @layer base {
   * {
     scrollbar-width: thin;
-    scrollbar-color: #CBD5E1 transparent;
+    scrollbar-color: #B9E3F5 transparent;
+  }
+
+  body {
+    @apply bg-slate-50 text-gray-700;
   }
 }
 
 @layer components {
   .btn-primary {
-    @apply bg-educlub hover:bg-educlub-dark text-white font-semibold py-2.5 px-6 rounded-2xl transition-all duration-200 shadow-md hover:shadow-lg active:scale-[0.98];
+    @apply bg-gradient-to-r from-educlub to-educlub-light hover:from-educlub-dark hover:to-educlub text-white font-semibold py-2.5 px-6 rounded-2xl transition-all duration-200 shadow-md hover:shadow-lg active:scale-[0.98];
   }
   .btn-secondary {
-    @apply bg-green-pastel hover:bg-green-pastel-dark text-white font-semibold py-2.5 px-6 rounded-2xl transition-all duration-200 shadow-md hover:shadow-lg active:scale-[0.98];
+    @apply bg-gradient-to-r from-green-pastel to-educlub-light hover:from-green-pastel-dark hover:to-green-pastel text-white font-semibold py-2.5 px-6 rounded-2xl transition-all duration-200 shadow-md hover:shadow-lg active:scale-[0.98];
   }
   .btn-warning {
-    @apply bg-orange-pastel hover:bg-orange-pastel-dark text-white font-semibold py-2.5 px-6 rounded-2xl transition-all duration-200 shadow-md hover:shadow-lg active:scale-[0.98];
+    @apply bg-gradient-to-r from-orange-pastel to-yellow-soft hover:from-orange-pastel-dark hover:to-orange-pastel text-white font-semibold py-2.5 px-6 rounded-2xl transition-all duration-200 shadow-md hover:shadow-lg active:scale-[0.98];
   }
   .btn-pink {
-    @apply bg-pink-pastel hover:bg-pink-pastel-dark text-white font-semibold py-2.5 px-6 rounded-2xl transition-all duration-200 shadow-md hover:shadow-lg active:scale-[0.98];
+    @apply bg-gradient-to-r from-pink-pastel to-lavanda hover:from-pink-pastel-dark hover:to-pink-pastel text-white font-semibold py-2.5 px-6 rounded-2xl transition-all duration-200 shadow-md hover:shadow-lg active:scale-[0.98];
   }
   .card {
-    @apply bg-white rounded-2xl shadow-md hover:shadow-lg transition-all duration-200 p-6;
+    @apply bg-white rounded-2xl shadow-md hover:shadow-lg transition-all duration-200 p-6 border border-sky-100/60;
   }
   .input-field {
-    @apply w-full rounded-xl border border-gray-200 px-4 py-3 text-sm focus:ring-2 focus:ring-educlub/30 focus:border-educlub outline-none transition-all duration-200;
+    @apply w-full rounded-xl border border-sky-100 bg-white px-4 py-3 text-sm focus:ring-2 focus:ring-educlub/40 focus:border-educlub outline-none transition-all duration-200;
   }
   .input-icon {
     @apply absolute left-3.5 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400;

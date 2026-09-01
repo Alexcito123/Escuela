@@ -32,6 +32,12 @@
                       quitar(i) {
                           if (this.archivos.length > 1) this.archivos.splice(i, 1);
                       },
+                      limpiar(i, ev) {
+                          const fila = ev.currentTarget.closest('.fila-archivo');
+                          const input = fila ? fila.querySelector('input[type=file]') : null;
+                          if (input) input.value = '';
+                          this.archivos[i] = { nombre: '', file: null, preview: '', esImagen: false, esPdf: false };
+                      },
                       seleccionar(i, event) {
                           const f = event.target.files[0];
                           if (!f) {
@@ -79,7 +85,7 @@
                     </label>
                     <div class="space-y-3">
                         <template x-for="(a, i) in archivos" :key="i">
-                            <div class="border-2 border-dashed border-gray-200 rounded-2xl p-4 hover:border-educlub/40 hover:bg-educlub/5 transition-all">
+                            <div class="border-2 border-dashed border-gray-200 rounded-2xl p-4 hover:border-educlub/40 hover:bg-educlub/5 transition-all fila-archivo">
                                 <div class="flex items-center justify-between gap-3">
                                     <label class="flex-1 min-w-0 cursor-pointer">
                                         <span class="flex items-center gap-3 text-sm text-gray-600">
@@ -92,10 +98,16 @@
                                         </span>
                                         <input type="file" :name="'files[]'" class="hidden" @change="seleccionar(i, $event)">
                                     </label>
-                                    <button type="button" @click="quitar(i)" x-show="archivos.length > 1"
-                                            class="shrink-0 p-2 text-gray-300 hover:text-red-500 hover:bg-red-50 rounded-xl transition-all" title="Quitar archivo">
-                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
-                                    </button>
+                                    <div class="flex items-center gap-1 shrink-0">
+                                        <button type="button" @click="limpiar(i, $event)" x-show="a.file"
+                                                class="p-2 text-gray-300 hover:text-red-500 hover:bg-red-50 rounded-xl transition-all" title="Eliminar este archivo (no lo sube)">
+                                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
+                                        </button>
+                                        <button type="button" @click="quitar(i)" x-show="!a.file && archivos.length > 1"
+                                                class="p-2 text-gray-300 hover:text-red-500 hover:bg-red-50 rounded-xl transition-all" title="Quitar fila">
+                                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+                                        </button>
+                                    </div>
                                 </div>
                                 <img x-show="a.esImagen && a.preview" :src="a.preview" class="mt-3 max-h-40 mx-auto rounded-xl border border-gray-200 shadow-sm" alt="Vista previa">
                                 <iframe x-show="a.esPdf && a.preview" :src="a.preview" class="mt-3 w-full h-60 rounded-xl border border-gray-200 shadow-sm"></iframe>

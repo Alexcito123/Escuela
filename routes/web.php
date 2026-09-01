@@ -28,6 +28,7 @@ Route::middleware('auth')->prefix('perfil')->name('perfil.')->group(function () 
     Route::get('/', [ProfileController::class, 'show'])->name('show');
     Route::get('/editar', [ProfileController::class, 'edit'])->name('edit');
     Route::put('/', [ProfileController::class, 'update'])->name('update');
+    Route::delete('/avatar', [ProfileController::class, 'destroyAvatar'])->name('destroyAvatar');
 });
 
 Route::middleware('auth')->prefix('formato-imagen')->name('imagenes.')->group(function () {
