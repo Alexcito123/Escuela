@@ -25,7 +25,7 @@ http://127.0.0.1:8000
 El proyecto está instalado en:
 
 ```
-C:\xampp\htdocs\Educlub\Escuela
+C:\xampp\htdocs\xampp\Educlub
 ```
 
 Si la ruta cambia, ajusta las variables `PROJECT` y `PHP` del archivo `.bat`.
@@ -42,7 +42,7 @@ El archivo ya fue creado en el Escritorio. Si se crea manualmente, usa la extens
 
 ### 3. Pegar este contenido
 
-El archivo del Escritorio inicia `php artisan serve` desde `C:\xampp\htdocs\Educlub\Escuela` usando PHP 8.2 y abre `http://127.0.0.1:8000`.
+El archivo del Escritorio inicia `php artisan serve` desde `C:\xampp\htdocs\xampp\Educlub` usando PHP 8.2 y abre `http://127.0.0.1:8000`.
 
 ### 4. Guardar y probar
 
