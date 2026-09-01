@@ -33,7 +33,7 @@
 
             <div class="space-y-5">
                 {{-- Foto de perfil --}}
-                <div class="flex items-center gap-4">
+                <div class="flex items-center gap-4 py-2">
                     <div class="w-20 h-20 rounded-full bg-educlub/10 flex items-center justify-center overflow-hidden shrink-0">
                         @if (auth()->user()->avatar_url)
                             <img src="{{ auth()->user()->avatar_url }}" alt="Foto de perfil" class="w-full h-full object-cover">
@@ -44,10 +44,17 @@
                         @endif
                     </div>
                     <div class="flex-1">
-                        <label for="avatar" class="block text-sm font-semibold text-gray-700 mb-1.5">Foto de Perfil</label>
-                        <input type="file" name="avatar" id="avatar" accept="image/*"
-                            class="block w-full text-sm text-gray-500 file:mr-3 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-sm file:font-semibold file:bg-educlub file:text-white hover:file:bg-educlub-dark">
-                        <p class="mt-1.5 text-xs text-gray-400">JPG, PNG, GIF o WEBP. Máximo 2MB.</p>
+                        <label for="avatar" class="block text-sm font-semibold text-gray-700 mb-3">Foto de Perfil</label>
+                        <div class="mb-3">
+                            <input type="file" name="avatar" id="avatar" accept="image/*" class="hidden">
+                            <label for="avatar" class="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl cursor-pointer bg-cyan-500 hover:bg-cyan-600 text-black font-semibold text-base shadow-sm border border-slate-300 transition-all duration-200">
+                                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/>
+                                </svg>
+                                <span>Subir archivo</span>
+                            </label>
+                        </div>
+                        <p class="text-xs text-gray-400">JPG, PNG, GIF o WEBP. Máximo 2MB.</p>
                         @error('avatar')
                             <p class="mt-1.5 text-xs text-red-500">{{ $message }}</p>
                         @enderror
